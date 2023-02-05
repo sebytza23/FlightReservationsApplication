@@ -1,0 +1,328 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = FlightReservationsApplication
+build_property.RootNamespace = FlightReservationsApplication
+build_property.ProjectDir = C:\Users\sebby\source\repos\FlightReservationsApplication\FlightReservationsApplication\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\sebby\source\repos\FlightReservationsApplication\FlightReservationsApplication
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Accounts/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Accounts/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Accounts/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Accounts/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Accounts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Aircraft/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlyY3JhZnRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Aircraft/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlyY3JhZnRcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Aircraft/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlyY3JhZnRcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Aircraft/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlyY3JhZnRcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Aircraft/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlyY3JhZnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airlines/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airlines/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airlines/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airlines/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airlines/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airports/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airports/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airports/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airports/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Airports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Classes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3Nlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Classes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3Nlc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Classes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3Nlc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Classes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3Nlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Classes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xhc3Nlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ContactInformations/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdEluZm9ybWF0aW9uc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ContactInformations/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdEluZm9ybWF0aW9uc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ContactInformations/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdEluZm9ybWF0aW9uc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ContactInformations/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdEluZm9ybWF0aW9uc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ContactInformations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdEluZm9ybWF0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/CreditCards/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/CreditCards/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/CreditCards/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/CreditCards/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/CreditCards/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Customers/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Customers/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Customers/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Customers/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Customers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Employees/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Employees/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Employees/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Employees/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Employees/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Flights/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Flights/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Flights/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Flights/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Flights/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ReservationConfirmations/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25Db25maXJtYXRpb25zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ReservationConfirmations/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25Db25maXJtYXRpb25zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ReservationConfirmations/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25Db25maXJtYXRpb25zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ReservationConfirmations/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25Db25maXJtYXRpb25zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/ReservationConfirmations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25Db25maXJtYXRpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Reservations/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Reservations/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Reservations/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Reservations/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Reservations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/SalaryHistories/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5SGlzdG9yaWVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/SalaryHistories/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5SGlzdG9yaWVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/SalaryHistories/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5SGlzdG9yaWVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/SalaryHistories/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5SGlzdG9yaWVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/SalaryHistories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5SGlzdG9yaWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Seats/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Seats/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Seats/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Seats/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Seats/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Shared/NotFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE5vdEZvdW5kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sebby/source/repos/FlightReservationsApplication/FlightReservationsApplication/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-jax97roznw

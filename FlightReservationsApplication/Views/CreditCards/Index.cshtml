@@ -1,0 +1,71 @@
+﻿@model IEnumerable<FlightReservationsApplication.Models.CreditCard>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardHolderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpirationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecurityCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPrimary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardHolderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpirationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecurityCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPrimary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CreditCardID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CreditCardID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CreditCardID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
