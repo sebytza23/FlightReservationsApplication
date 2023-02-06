@@ -7,37 +7,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlightReservationsApplication.Context;
 using FlightReservationsApplication.Models;
+using FlightReservationsApplication.Interfaces;
+using FlightReservationsApplication.Repository;
 
 namespace FlightReservationsApplication.Controllers
 {
     public class ReservationConfirmationsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IReservationConfirmationRepository _reservationConfirmationRepository;
 
-        public ReservationConfirmationsController(ApplicationDbContext context)
+        public ReservationConfirmationsController(IReservationConfirmationRepository reservationConfirmationRepository)
         {
-            _context = context;
+            _reservationConfirmationRepository = reservationConfirmationRepository;
         }
 
         // GET: ReservationConfirmations
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ReservationConfirmations.Include(r => r.Employee).Include(r => r.Reservation);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _reservationConfirmationRepository.ReservationConfirmationsWithAll());
         }
 
         // GET: ReservationConfirmations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ReservationConfirmations == null)
+            if (await _reservationConfirmationRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var reservationConfirmation = await _context.ReservationConfirmations
-                .Include(r => r.Employee)
-                .Include(r => r.Reservation)
-                .FirstOrDefaultAsync(m => m.ReservationConfirmationID == id);
+            var reservationConfirmation = await _reservationConfirmationRepository.GetReservationConfirmationById(id);
+
             if (reservationConfirmation == null)
             {
                 return NotFound();
@@ -47,10 +46,10 @@ namespace FlightReservationsApplication.Controllers
         }
 
         // GET: ReservationConfirmations/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "EmployeeID");
-            ViewData["ReservationID"] = new SelectList(_context.Reservations, "ReservationID", "ReservationID");
+            ViewData["EmployeeID"] = new SelectList((await _reservationConfirmationRepository.GetEmployees()), "EmployeeID", "EmployeeID");
+            ViewData["ReservationID"] = new SelectList((await _reservationConfirmationRepository.GetReservations()), "ReservationID", "ReservationID");
             return View();
         }
 
@@ -63,30 +62,35 @@ namespace FlightReservationsApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reservationConfirmation);
-                await _context.SaveChangesAsync();
+                if (reservationConfirmation.ConfirmationDate != null && reservationConfirmation.DeclinedDate != null)
+                {
+                    ViewData["EmployeeID"] = new SelectList((await _reservationConfirmationRepository.GetEmployees()), "EmployeeID", "EmployeeID", reservationConfirmation.EmployeeID);
+                    ViewData["ReservationID"] = new SelectList((await _reservationConfirmationRepository.GetReservations()), "ReservationID", "ReservationID", reservationConfirmation.ReservationID);
+                    return View(reservationConfirmation);
+                }
+                await _reservationConfirmationRepository.CreateReservationConfirmation(reservationConfirmation);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "EmployeeID", reservationConfirmation.EmployeeID);
-            ViewData["ReservationID"] = new SelectList(_context.Reservations, "ReservationID", "ReservationID", reservationConfirmation.ReservationID);
+            ViewData["EmployeeID"] = new SelectList((await _reservationConfirmationRepository.GetEmployees()), "EmployeeID", "EmployeeID", reservationConfirmation.EmployeeID);
+            ViewData["ReservationID"] = new SelectList((await _reservationConfirmationRepository.GetReservations()), "ReservationID", "ReservationID", reservationConfirmation.ReservationID);
             return View(reservationConfirmation);
         }
 
         // GET: ReservationConfirmations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ReservationConfirmations == null)
+            if (await _reservationConfirmationRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var reservationConfirmation = await _context.ReservationConfirmations.FindAsync(id);
+            var reservationConfirmation = await _reservationConfirmationRepository.Details(id);
             if (reservationConfirmation == null)
             {
                 return NotFound();
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "EmployeeID", reservationConfirmation.EmployeeID);
-            ViewData["ReservationID"] = new SelectList(_context.Reservations, "ReservationID", "ReservationID", reservationConfirmation.ReservationID);
+            ViewData["EmployeeID"] = new SelectList((await _reservationConfirmationRepository.GetEmployees()), "EmployeeID", "EmployeeID", reservationConfirmation.EmployeeID);
+            ViewData["ReservationID"] = new SelectList((await _reservationConfirmationRepository.GetReservations()), "ReservationID", "ReservationID", reservationConfirmation.ReservationID);
             return View(reservationConfirmation);
         }
 
@@ -106,12 +110,17 @@ namespace FlightReservationsApplication.Controllers
             {
                 try
                 {
-                    _context.Update(reservationConfirmation);
-                    await _context.SaveChangesAsync();
+                    if (reservationConfirmation.ConfirmationDate != null && reservationConfirmation.DeclinedDate != null)
+                    {
+                        ViewData["EmployeeID"] = new SelectList((await _reservationConfirmationRepository.GetEmployees()), "EmployeeID", "EmployeeID", reservationConfirmation.EmployeeID);
+                        ViewData["ReservationID"] = new SelectList((await _reservationConfirmationRepository.GetReservations()), "ReservationID", "ReservationID", reservationConfirmation.ReservationID);
+                        return View(reservationConfirmation);
+                    }
+                    await _reservationConfirmationRepository.EditReservationConfirmation(reservationConfirmation);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReservationConfirmationExists(reservationConfirmation.ReservationConfirmationID))
+                    if (!(await _reservationConfirmationRepository.ExistEntity(reservationConfirmation.ReservationConfirmationID)))
                     {
                         return NotFound();
                     }
@@ -122,23 +131,21 @@ namespace FlightReservationsApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "EmployeeID", reservationConfirmation.EmployeeID);
-            ViewData["ReservationID"] = new SelectList(_context.Reservations, "ReservationID", "ReservationID", reservationConfirmation.ReservationID);
+            ViewData["EmployeeID"] = new SelectList((await _reservationConfirmationRepository.GetEmployees()), "EmployeeID", "EmployeeID", reservationConfirmation.EmployeeID);
+            ViewData["ReservationID"] = new SelectList((await _reservationConfirmationRepository.GetReservations()), "ReservationID", "ReservationID", reservationConfirmation.ReservationID);
             return View(reservationConfirmation);
         }
 
         // GET: ReservationConfirmations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ReservationConfirmations == null)
+            if (await _reservationConfirmationRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var reservationConfirmation = await _context.ReservationConfirmations
-                .Include(r => r.Employee)
-                .Include(r => r.Reservation)
-                .FirstOrDefaultAsync(m => m.ReservationConfirmationID == id);
+            var reservationConfirmation = await _reservationConfirmationRepository.GetReservationConfirmationById(id);
+
             if (reservationConfirmation == null)
             {
                 return NotFound();
@@ -152,23 +159,13 @@ namespace FlightReservationsApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ReservationConfirmations == null)
+            if (await _reservationConfirmationRepository.GetByIdAsync(id) == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.ReservationConfirmations'  is null.");
             }
-            var reservationConfirmation = await _context.ReservationConfirmations.FindAsync(id);
-            if (reservationConfirmation != null)
-            {
-                _context.ReservationConfirmations.Remove(reservationConfirmation);
-            }
-            
-            await _context.SaveChangesAsync();
+            var reservationConfirmation = await _reservationConfirmationRepository.GetReservationConfirmationById(id);
+            await _reservationConfirmationRepository.DeleteReservationConfirmation(reservationConfirmation);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ReservationConfirmationExists(int id)
-        {
-          return _context.ReservationConfirmations.Any(e => e.ReservationConfirmationID == id);
         }
     }
 }

@@ -21,6 +21,9 @@ builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IFlightRepository, FlightRepository>();
 builder.Services.AddTransient<ISeatRepository, SeatRepository>();
+builder.Services.AddTransient<ISalaryHistoryRepository, SalaryHistoryRepository>();
+builder.Services.AddTransient<IReservationRepository, ReservationRepository>();
+builder.Services.AddTransient<IReservationConfirmationRepository, ReservationConfirmationRepository>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

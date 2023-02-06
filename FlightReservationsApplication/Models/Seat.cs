@@ -10,7 +10,7 @@ namespace FlightReservationsApplication.Models
         [Required(ErrorMessage = "Numarul locului este necesar.")]
         [Display(Name = "Numar Loc")]
         public int SeatNumber { get; set; }
-        [Required(ErrorMessage = "Clasa este necesar.")]
+        [Required(ErrorMessage = "Clasa este necesara.")]
         [Display(Name = "Clasa")]
         public int ClassID { get; set; }
         [Required(ErrorMessage = "Zborul este necesar.")]

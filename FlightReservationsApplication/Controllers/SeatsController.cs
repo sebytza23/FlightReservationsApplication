@@ -58,7 +58,7 @@ namespace FlightReservationsApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SeatID,SeatNumber,FlightID,IsAvailable")] Seat seat)
+        public async Task<IActionResult> Create([Bind("SeatID,SeatNumber,ClassID,FlightID,IsAvailable")] Seat seat)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace FlightReservationsApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SeatID,SeatNumber,FlightID,IsAvailable")] Seat seat)
+        public async Task<IActionResult> Edit(int id, [Bind("SeatID,SeatNumber,ClassID,FlightID,IsAvailable")] Seat seat)
         {
             if (id != seat.SeatID)
             {
@@ -121,7 +121,7 @@ namespace FlightReservationsApplication.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FlightID"] = new SelectList((await _seatRepository.GetFlights()), "FlightID", "FlightID", seat.FlightID);
-            ViewData["ClassID"] = new SelectList((await _seatRepository.GetClasses()), "ClassID", "ClassID", seat.ClassID);
+            ViewData["ClassID"] = new SelectList((await _seatRepository.GetClasses()), "ClassID", "Price Number", seat.ClassID);
             return View(seat);
         }
 

@@ -1,5 +1,8 @@
-﻿using FlightReservationsApplication.Models;
+﻿using FlightReservationsApplication.Interfaces;
+using FlightReservationsApplication.Models;
+using FlightReservationsApplication.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 
 namespace FlightReservationsApplication.Controllers
@@ -8,19 +11,33 @@ namespace FlightReservationsApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IAirportRepository _airportRepository;
+        private readonly IFlightRepository _flightRepository;
+
+
+        public HomeController(ILogger<HomeController> logger, IAirportRepository airportRepository, IFlightRepository flightRepository)
         {
             _logger = logger;
+            _airportRepository = airportRepository;
+            _flightRepository = flightRepository;
+
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var homeModelIndex = new HomeIndexModel
+            {
+                ToLocation = "",
+                FromLocation = "",
+                CityLocation = await _airportRepository.GetAirportsLocations()
+            };
+            return View(homeModelIndex);
+
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Search(string? FromLocation, string? ToLocation, DateTime? DepartureDate, int? pageSize, int? pageNumber)
         {
-            return View();
+            return View(await _flightRepository.GetFlightsByLocationAsync(FromLocation, ToLocation, DepartureDate, pageNumber ?? 1, pageSize ?? 50));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

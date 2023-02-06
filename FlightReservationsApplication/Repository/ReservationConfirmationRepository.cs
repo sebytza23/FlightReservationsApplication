@@ -1,4 +1,4 @@
-﻿/*using FlightReservationsApplication.Context;
+﻿using FlightReservationsApplication.Context;
 using FlightReservationsApplication.Interfaces;
 using FlightReservationsApplication.Models;
 using FlightReservationsApplication.Repository;
@@ -8,72 +8,81 @@ using System.Security.Principal;
 
 namespace FlightReservationsApplication.Repository
 {
-    public class ContactInformationRepository : Repository<ContactInformation>, IContactInformationRepository
+    public class ReservationConfirmationRepository : Repository<ReservationConfirmation>, IReservationConfirmationRepository
     {
-        public ContactInformationRepository(ApplicationDbContext context) : base(context)
+        public ReservationConfirmationRepository(ApplicationDbContext context) : base(context)
         {
         }
 
-        public async Task<ContactInformation> CreateContactInformation(ContactInformation contactInformation)
+        public async Task<ReservationConfirmation> CreateReservationConfirmation(ReservationConfirmation reservationConfirmation)
         {
-            await _context.ContactInformations.AddAsync(contactInformation);
+            await _context.ReservationConfirmations.AddAsync(reservationConfirmation);
             await _context.SaveChangesAsync();
-            Account account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountID == contactInformation.AccountID);
-
-            if (contactInformation.IsPrimary || account.ContactInformationID == null)
-            {
-                account.ContactInformationID = contactInformation.ContactInformationID;
-            }
-            _context.Accounts.Update(account);
+            reservationConfirmation = await GetReservationConfirmationById(reservationConfirmation.ReservationConfirmationID);
+            reservationConfirmation.Reservation.ReservationConfirmationID = reservationConfirmation.ReservationConfirmationID;
+            if (reservationConfirmation.ConfirmationDate != null)
+                reservationConfirmation.Reservation.Status = Status.Accepted;
+            if (reservationConfirmation.DeclinedDate != null)
+                reservationConfirmation.Reservation.Status = Status.Declined;
+            _context.ReservationConfirmations.Update(reservationConfirmation);
             await _context.SaveChangesAsync();
-            return contactInformation;
+            return reservationConfirmation;
         }
 
-        public async Task EditContactInformation(ContactInformation contactInformation)
+        public async Task EditReservationConfirmation(ReservationConfirmation reservationConfirmation)
         {
-            await UpdateAsync(contactInformation);
-            Account account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountID == contactInformation.AccountID);
-            if (contactInformation.IsPrimary || account.ContactInformationID == null)
+            ReservationConfirmation oldReservationConfirmation = await GetReservationConfirmationById(reservationConfirmation.ReservationConfirmationID);
+            if(reservationConfirmation.DeclinedDate != oldReservationConfirmation.DeclinedDate && oldReservationConfirmation.DeclinedDate == null)
             {
-                account.ContactInformationID = contactInformation.ContactInformationID;
-            }
-            _context.Accounts.Update(account);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteContactInformation(ContactInformation contactInformation) {
-
-            if (contactInformation == null) return;
-            contactInformation.Account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountID == contactInformation.AccountID);
-            if (contactInformation.Account.ContactInformationID == contactInformation.ContactInformationID)
+                oldReservationConfirmation.Reservation.Status = Status.Declined;
+                _context.ReservationConfirmations.Update(oldReservationConfirmation);
+                await _context.SaveChangesAsync();
+            }else if(reservationConfirmation.ConfirmationDate != oldReservationConfirmation.ConfirmationDate && oldReservationConfirmation.ConfirmationDate == null)
             {
-                Account account = contactInformation.Account;
-                account.ContactInformationID = null;
-                _context.Accounts.Update(account);
+                oldReservationConfirmation.Reservation.Status = Status.Accepted;
+                _context.ReservationConfirmations.Update(oldReservationConfirmation);
+                await _context.SaveChangesAsync();
+            }else if (reservationConfirmation.ConfirmationDate == null && oldReservationConfirmation.DeclinedDate == null)
+            {
+                oldReservationConfirmation.Reservation.Status = Status.InProgress;
+                _context.ReservationConfirmations.Update(oldReservationConfirmation);
                 await _context.SaveChangesAsync();
             }
-            await DeleteAsync(contactInformation);
-            
+            State(oldReservationConfirmation, EntityState.Detached);
+            await UpdateAsync(reservationConfirmation);
         }
 
-        public async Task<List<ContactInformation>> InformationsWithAccounts()
+        public async Task DeleteReservationConfirmation(ReservationConfirmation reservationConfirmation)
         {
-            string[] includes = { "Account" };
-            List<ContactInformation> contactInformation = await (await Include(includes)).ToListAsync();
-            return contactInformation;
+
+            if (reservationConfirmation == null) return;
+            if (reservationConfirmation.Reservation != null)
+            {
+                reservationConfirmation.Reservation.ReservationConfirmationID = null;
+                _context.ReservationConfirmations.Update(reservationConfirmation);
+                await _context.SaveChangesAsync();
+            }
+            await DeleteAsync(reservationConfirmation);
+
         }
 
-        public async Task<ContactInformation> GetContactInformationById(int? id)
+        public async Task<List<ReservationConfirmation>> ReservationConfirmationsWithAll()
         {
-            string[] includes = { "Account" };
-            return await (await Include(includes)).FirstOrDefaultAsync(c => c.ContactInformationID == id);
+            string[] includes = { "Employee", "Reservation" };
+            List<ReservationConfirmation> reservationConfirmation = await (await Include(includes)).ToListAsync();
+            return reservationConfirmation;
         }
 
-        public async Task<DbSet<Account>> GetAccounts()
+        public async Task<ReservationConfirmation> GetReservationConfirmationById(int? id)
         {
-            return _context.Accounts;
+            string[] includes = { "Employee", "Reservation" };
+            return await (await Include(includes)).FirstOrDefaultAsync(c => c.ReservationConfirmationID == id);
         }
+
+        public async Task<DbSet<Employee>> GetEmployees() => _context.Employees;
+
+        public async Task<DbSet<Reservation>> GetReservations() => _context.Reservations;
+
 
     }
 }
-*/

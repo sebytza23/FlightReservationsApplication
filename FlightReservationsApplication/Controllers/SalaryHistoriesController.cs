@@ -7,37 +7,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlightReservationsApplication.Context;
 using FlightReservationsApplication.Models;
+using FlightReservationsApplication.Interfaces;
+using FlightReservationsApplication.Repository;
 
 namespace FlightReservationsApplication.Controllers
 {
     public class SalaryHistoriesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ISalaryHistoryRepository _salaryHistoryRepository;
 
-        public SalaryHistoriesController(ApplicationDbContext context)
+        public SalaryHistoriesController(ISalaryHistoryRepository salaryHistoryRepository)
         {
-            _context = context;
+            _salaryHistoryRepository = salaryHistoryRepository;
         }
+
 
         // GET: SalaryHistories
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.SalaryHistories.Include(s => s.Employee).Include(s => s.NextSalaryHistory);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _salaryHistoryRepository.SalaryWithEmployee());
         }
 
         // GET: SalaryHistories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.SalaryHistories == null)
+            if (await _salaryHistoryRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var salaryHistory = await _context.SalaryHistories
-                .Include(s => s.Employee)
-                .Include(s => s.NextSalaryHistory)
-                .FirstOrDefaultAsync(m => m.SalaryHistoryID == id);
+            var salaryHistory = await _salaryHistoryRepository.GetSalaryHistoryById(id);
             if (salaryHistory == null)
             {
                 return NotFound();
@@ -47,10 +46,9 @@ namespace FlightReservationsApplication.Controllers
         }
 
         // GET: SalaryHistories/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "EmployeeID");
-            ViewData["NextSalaryHistoryID"] = new SelectList(_context.SalaryHistories, "SalaryHistoryID", "SalaryHistoryID");
+            ViewData["EmployeeID"] = new SelectList((await _salaryHistoryRepository.GetEmployees()), "EmployeeID", "EmployeeID");
             return View();
         }
 
@@ -63,30 +61,27 @@ namespace FlightReservationsApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(salaryHistory);
-                await _context.SaveChangesAsync();
+                salaryHistory = await _salaryHistoryRepository.CreateSalaryHistory(salaryHistory);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "EmployeeID", salaryHistory.EmployeeID);
-            ViewData["NextSalaryHistoryID"] = new SelectList(_context.SalaryHistories, "SalaryHistoryID", "SalaryHistoryID", salaryHistory.NextSalaryHistoryID);
+            ViewData["EmployeeID"] = new SelectList((await _salaryHistoryRepository.GetEmployees()), "EmployeeID", "EmployeeID", salaryHistory.EmployeeID);
             return View(salaryHistory);
         }
 
         // GET: SalaryHistories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.SalaryHistories == null)
+            if (await _salaryHistoryRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var salaryHistory = await _context.SalaryHistories.FindAsync(id);
+            var salaryHistory = await _salaryHistoryRepository.Details(id);
             if (salaryHistory == null)
             {
                 return NotFound();
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "EmployeeID", salaryHistory.EmployeeID);
-            ViewData["NextSalaryHistoryID"] = new SelectList(_context.SalaryHistories, "SalaryHistoryID", "SalaryHistoryID", salaryHistory.NextSalaryHistoryID);
+            ViewData["EmployeeID"] = new SelectList((await _salaryHistoryRepository.GetEmployees()), "EmployeeID", "EmployeeID", salaryHistory.EmployeeID);
             return View(salaryHistory);
         }
 
@@ -106,12 +101,11 @@ namespace FlightReservationsApplication.Controllers
             {
                 try
                 {
-                    _context.Update(salaryHistory);
-                    await _context.SaveChangesAsync();
+                    await _salaryHistoryRepository.UpdateAsync(salaryHistory);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SalaryHistoryExists(salaryHistory.SalaryHistoryID))
+                    if (!(await _salaryHistoryRepository.ExistEntity(salaryHistory.SalaryHistoryID)))
                     {
                         return NotFound();
                     }
@@ -122,23 +116,19 @@ namespace FlightReservationsApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "EmployeeID", "EmployeeID", salaryHistory.EmployeeID);
-            ViewData["NextSalaryHistoryID"] = new SelectList(_context.SalaryHistories, "SalaryHistoryID", "SalaryHistoryID", salaryHistory.NextSalaryHistoryID);
+            ViewData["EmployeeID"] = new SelectList((await _salaryHistoryRepository.GetEmployees()), "EmployeeID", "EmployeeID", salaryHistory.EmployeeID);
             return View(salaryHistory);
         }
 
         // GET: SalaryHistories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.SalaryHistories == null)
+            if (await _salaryHistoryRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var salaryHistory = await _context.SalaryHistories
-                .Include(s => s.Employee)
-                .Include(s => s.NextSalaryHistory)
-                .FirstOrDefaultAsync(m => m.SalaryHistoryID == id);
+            var salaryHistory = await _salaryHistoryRepository.GetSalaryHistoryById(id);
             if (salaryHistory == null)
             {
                 return NotFound();
@@ -152,23 +142,14 @@ namespace FlightReservationsApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.SalaryHistories == null)
+            if (await _salaryHistoryRepository.GetSalaryHistoryById(id) == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.SalaryHistories'  is null.");
             }
-            var salaryHistory = await _context.SalaryHistories.FindAsync(id);
-            if (salaryHistory != null)
-            {
-                _context.SalaryHistories.Remove(salaryHistory);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            var salaryHistory = await _salaryHistoryRepository.GetSalaryWithAll(id); ;
+            await _salaryHistoryRepository.DeleteSalaryHistory(salaryHistory);
 
-        private bool SalaryHistoryExists(int id)
-        {
-          return _context.SalaryHistories.Any(e => e.SalaryHistoryID == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

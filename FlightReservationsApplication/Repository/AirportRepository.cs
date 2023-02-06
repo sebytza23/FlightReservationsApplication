@@ -20,5 +20,9 @@ namespace FlightReservationsApplication.Repository
             return airport;
         }
 
+        public async Task<List<string>> GetAirportsLocations()
+        {
+            return await _context.Airports.Select(a => a.Location).Distinct().ToListAsync();
+        }
     }
 }

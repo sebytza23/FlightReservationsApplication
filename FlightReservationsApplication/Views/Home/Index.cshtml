@@ -1,8 +1,54 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model FlightReservationsApplication.Utils.HomeIndexModel
+
+@{
+    ViewData["Title"] = "Acasa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="bg-white">
+  <div class="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
+    <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+      <h2 class="mx-auto max-w-2xl text-4xl font-bold tracking-tight text-white">Cauta un zbor astazi.</h2>
+      <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">Avem cele mai avantajoase preturi pentru tine</p>
+      <div class="mt-10 flex items-center justify-center gap-x-6">
+        <form asp-action="Search" method="POST" class="grid grid-cols-2 gap-y-6 sm:grid-cols-4 sm:gap-x-4">
+          <div class="relative mt-1 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <span class="text-gray-500 sm:text-sm">Din</span>
+            </div>
+                <select asp-for="FromLocation" asp-items="new SelectList(Model.CityLocation)" class="block w-full rounded-md border-gray-300 pl-16 focus:border-indigo-500 focus:ring-indigo-500 sm:pl-14 sm:text-sm">
+                    <option disabled selected>Oras</option>
+                </select>
+            </div>
+            <div>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span class="text-gray-500 sm:text-sm">Catre</span>
+                    </div>
+                            <select asp-for="ToLocation" asp-items="new SelectList(Model.CityLocation)" class="block w-full rounded-md border-gray-300 pl-16 focus:border-indigo-500 focus:ring-indigo-500 sm:pl-14 sm:text-sm">
+                                <option disabled selected>Oras</option>
+                            </select>
+               </div>
+            </div>
+            <div>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span class="text-gray-500 sm:text-sm">Plecare</span>
+                    </div>
+                    <input type="date" class="block w-full rounded-md text-right border-gray-300 pl-16 focus:border-indigo-500 focus:ring-indigo-500 sm:pl-14 sm:text-sm">
+                </div>
+            </div>
+            <div>
+                <div class="relative rounded-md shadow-sm w-full h-full">
+                    <button type="submit" class=" w-full h-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                        <!-- Heroicon name: mini/envelope -->
+                        <heroicon kind="Mini" name="PaperAirplane" class="w-4 h-4 mx-2" />
+                        Explorati
+                    </button>
+                </div>
+            </div>
+        </form>
+                
+        </div>
+    </div>
+  </div>
 </div>

@@ -20,9 +20,9 @@ namespace FlightReservationsApplication.Models
         [Display(Name = "Detalii")]
         public string Notes { get; set; }
         [ForeignKey("ReservationID")]
-        public virtual Reservation Reservation { get; set; }
+        public virtual Reservation? Reservation { get; set; }
         [ForeignKey("EmployeeID")]
-        public virtual Employee Employee { get; set; }
+        public virtual Employee? Employee { get; set; }
     }
 }
 

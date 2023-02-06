@@ -21,71 +21,82 @@ namespace FlightReservationsApplication.Context
             context.SaveChanges();
             // Clienti
             Customer customer = new Customer { AccountID = account2.AccountID };
-            await context.Customers.AddAsync(customer);
+            context.Customers.Add(customer);
             // Angajati
             Employee employee = new Employee { AccountID = account2.AccountID, IsAdmin = true };
-            await context.Employees.AddAsync(employee);
+            context.Employees.Add(employee);
             account2.CustomerID = customer.CustomerID;
             account1.EmployeeID = employee.EmployeeID;
             context.Accounts.Update(account1);
             context.Accounts.Update(account2);
             context.SaveChanges();
+
+            // Istoric Salariu
+            SalaryHistory istoric1 = new SalaryHistory { EmployeeID = 1, EffectiveDate = new DateTime(DateTime.Now.Year, 1, 1), Amount = 2850 };
+            context.SalaryHistories.Add(istoric1);
+            context.SaveChanges();
+            SalaryHistory istoric2 = new SalaryHistory { EmployeeID = 1, EffectiveDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), Amount = 2950, PreviousSalaryHistoryID = istoric1.SalaryHistoryID };
+            context.SalaryHistories.Add(istoric2);
+            context.SaveChanges();
+            istoric1.NextSalaryHistoryID = istoric2.SalaryHistoryID;
+            context.SalaryHistories.Update(istoric1);
+            context.SaveChanges();
             //Avioane
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Boeing 747", Capacity = 489 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Boeing 747", Capacity = 489 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Airbus A380", Capacity = 853 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Boeing 777", Capacity = 334 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Airbus A320", Capacity = 165 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Boeing 787 Dreamliner", Capacity = 286 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Airbus A350", Capacity = 440 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Embraer E-Jet", Capacity = 96 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "McDonnell Douglas MD-80", Capacity = 152 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Boeing 737", Capacity = 162 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Comac C919", Capacity = 168 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Bomardier CRJ", Capacity = 75 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "ATR 72", Capacity = 75 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Boeing 757", Capacity = 200 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Airbus A330", Capacity = 370 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Boeing 767", Capacity = 287 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Embraer 190", Capacity = 111 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Bombardier Q400", Capacity = 84 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Tupolev Tu-154", Capacity = 200 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "McDonnell Douglas DC-9", Capacity = 110 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Fokker 70/100", Capacity = 85 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Boeing 787", Capacity = 341 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Sukhoi Superjet 100", Capacity = 103 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Irkut MC-21", Capacity = 187 });
-            await context.Aircrafts.AddAsync(new Aircraft { Model = "Comac C919", Capacity = 168 });
+            context.Aircrafts.Add(new Aircraft { Model = "Boeing 747", Capacity = 489 });
+            context.Aircrafts.Add(new Aircraft { Model = "Boeing 747", Capacity = 489 });
+            context.Aircrafts.Add(new Aircraft { Model = "Airbus A380", Capacity = 853 });
+            context.Aircrafts.Add(new Aircraft { Model = "Boeing 777", Capacity = 334 });
+            context.Aircrafts.Add(new Aircraft { Model = "Airbus A320", Capacity = 165 });
+            context.Aircrafts.Add(new Aircraft { Model = "Boeing 787 Dreamliner", Capacity = 286 });
+            context.Aircrafts.Add(new Aircraft { Model = "Airbus A350", Capacity = 440 });
+            context.Aircrafts.Add(new Aircraft { Model = "Embraer E-Jet", Capacity = 96 });
+            context.Aircrafts.Add(new Aircraft { Model = "McDonnell Douglas MD-80", Capacity = 152 });
+            context.Aircrafts.Add(new Aircraft { Model = "Boeing 737", Capacity = 162 });
+            context.Aircrafts.Add(new Aircraft { Model = "Comac C919", Capacity = 168 });
+            context.Aircrafts.Add(new Aircraft { Model = "Bomardier CRJ", Capacity = 75 });
+            context.Aircrafts.Add(new Aircraft { Model = "ATR 72", Capacity = 75 });
+            context.Aircrafts.Add(new Aircraft { Model = "Boeing 757", Capacity = 200 });
+            context.Aircrafts.Add(new Aircraft { Model = "Airbus A330", Capacity = 370 });
+            context.Aircrafts.Add(new Aircraft { Model = "Boeing 767", Capacity = 287 });
+            context.Aircrafts.Add(new Aircraft { Model = "Embraer 190", Capacity = 111 });
+            context.Aircrafts.Add(new Aircraft { Model = "Bombardier Q400", Capacity = 84 });
+            context.Aircrafts.Add(new Aircraft { Model = "Tupolev Tu-154", Capacity = 200 });
+            context.Aircrafts.Add(new Aircraft { Model = "McDonnell Douglas DC-9", Capacity = 110 });
+            context.Aircrafts.Add(new Aircraft { Model = "Fokker 70/100", Capacity = 85 });
+            context.Aircrafts.Add(new Aircraft { Model = "Boeing 787", Capacity = 341 });
+            context.Aircrafts.Add(new Aircraft { Model = "Sukhoi Superjet 100", Capacity = 103 });
+            context.Aircrafts.Add(new Aircraft { Model = "Irkut MC-21", Capacity = 187 });
+            context.Aircrafts.Add(new Aircraft { Model = "Comac C919", Capacity = 168 });
             // Aeroporturi
-            await context.Airports.AddAsync(new Airport { Name = "Henri Coandă International Airport", Location = "București" });
-            await context.Airports.AddAsync(new Airport { Name = "Avram Iancu Cluj International Airport", Location = "Cluj-Napoca" });
-            await context.Airports.AddAsync(new Airport { Name = "Traian Vuia International Airport", Location = "Timișoara" });
-            await context.Airports.AddAsync(new Airport { Name = "Aurel Vlaicu International Airport", Location = "București" });
-            await context.Airports.AddAsync(new Airport { Name = "Iași International Airport", Location = "Iași" });
-            await context.Airports.AddAsync(new Airport { Name = "Sibiu International Airport", Location = "Sibiu" });
-            await context.Airports.AddAsync(new Airport { Name = "Mihail Kogălniceanu International Airport", Location = "Constanta" });
-            await context.Airports.AddAsync(new Airport { Name = "Târgu Mureș International Airport", Location = "Târgu Mureș" });
-            await context.Airports.AddAsync(new Airport { Name = "Bacău International Airport", Location = "Bacău" });
-            await context.Airports.AddAsync(new Airport { Name = "Oradea International Airport", Location = "Oradea" });
-            await context.Airports.AddAsync(new Airport { Name = "Satu Mare International Airport", Location = "Satu Mare" });
-            await context.Airports.AddAsync(new Airport { Name = "Suceava International Airport", Location = "Suceava" });
-            await context.Airports.AddAsync(new Airport { Name = "Arad International Airport", Location = "Arad" });
-            await context.Airports.AddAsync(new Airport { Name = "Craiova International Airport", Location = "Craiova" });
-            await context.Airports.AddAsync(new Airport { Name = "Targu Jiu International Airport", Location = "Targu Jiu" });
-            await context.Airports.AddAsync(new Airport { Name = "Alba Iulia International Airport", Location = "Alba Iulia" });
-            await context.Airports.AddAsync(new Airport { Name = "Baia Mare International Airport", Location = "Baia Mare" });
+            context.Airports.Add(new Airport { Name = "Henri Coandă International Airport", Location = "București" });
+            context.Airports.Add(new Airport { Name = "Avram Iancu Cluj International Airport", Location = "Cluj-Napoca" });
+            context.Airports.Add(new Airport { Name = "Traian Vuia International Airport", Location = "Timișoara" });
+            context.Airports.Add(new Airport { Name = "Aurel Vlaicu International Airport", Location = "București" });
+            context.Airports.Add(new Airport { Name = "Iași International Airport", Location = "Iași" });
+            context.Airports.Add(new Airport { Name = "Sibiu International Airport", Location = "Sibiu" });
+            context.Airports.Add(new Airport { Name = "Mihail Kogălniceanu International Airport", Location = "Constanta" });
+            context.Airports.Add(new Airport { Name = "Târgu Mureș International Airport", Location = "Târgu Mureș" });
+            context.Airports.Add(new Airport { Name = "Bacău International Airport", Location = "Bacău" });
+            context.Airports.Add(new Airport { Name = "Oradea International Airport", Location = "Oradea" });
+            context.Airports.Add(new Airport { Name = "Satu Mare International Airport", Location = "Satu Mare" });
+            context.Airports.Add(new Airport { Name = "Suceava International Airport", Location = "Suceava" });
+            context.Airports.Add(new Airport { Name = "Arad International Airport", Location = "Arad" });
+            context.Airports.Add(new Airport { Name = "Craiova International Airport", Location = "Craiova" });
+            context.Airports.Add(new Airport { Name = "Targu Jiu International Airport", Location = "Targu Jiu" });
+            context.Airports.Add(new Airport { Name = "Alba Iulia International Airport", Location = "Alba Iulia" });
+            context.Airports.Add(new Airport { Name = "Baia Mare International Airport", Location = "Baia Mare" });
             // Companii Aeriene
-            await context.Airlines.AddAsync(new Airline { Name = "TAROM" });
-            await context.Airlines.AddAsync(new Airline { Name = "Blue Air" });
-            await context.Airlines.AddAsync(new Airline { Name = "Wizz Air" });
-            await context.Airlines.AddAsync(new Airline { Name = "Ryanair" });
-            await context.Airlines.AddAsync(new Airline { Name = "Carpatair" });
-            await context.Airlines.AddAsync(new Airline { Name = "Pegasus Airlines" });
-            await context.Airlines.AddAsync(new Airline { Name = "Air Bucharest" });
-            await context.Airlines.AddAsync(new Airline { Name = "Azur Air" });
-            await context.Airlines.AddAsync(new Airline { Name = "AtlasGlobal" });
-            await context.Airlines.AddAsync(new Airline { Name = "MyAir" });
-            await context.SaveChangesAsync();
+            context.Airlines.Add(new Airline { Name = "TAROM" });
+            context.Airlines.Add(new Airline { Name = "Blue Air" });
+            context.Airlines.Add(new Airline { Name = "Wizz Air" });
+            context.Airlines.Add(new Airline { Name = "Ryanair" });
+            context.Airlines.Add(new Airline { Name = "Carpatair" });
+            context.Airlines.Add(new Airline { Name = "Pegasus Airlines" });
+            context.Airlines.Add(new Airline { Name = "Air Bucharest" });
+            context.Airlines.Add(new Airline { Name = "Azur Air" });
+            context.Airlines.Add(new Airline { Name = "AtlasGlobal" });
+            context.Airlines.Add(new Airline { Name = "MyAir" });
+            context.SaveChanges();
             // Classes
             Airport[] airports = context.Airports.ToArray();
             Airline[] airlines = context.Airlines.ToArray();
@@ -157,17 +168,7 @@ namespace FlightReservationsApplication.Context
 
             }
 
-
-            // Istoric Salariu
-            SalaryHistory istoric1 = new SalaryHistory { EmployeeID = employee.EmployeeID, EffectiveDate = new DateTime(DateTime.Now.Year, 1, 1), Amount = 2850};
-            context.SalaryHistories.Add(istoric1);
-            context.SaveChanges();
-            SalaryHistory istoric2 = new SalaryHistory { EmployeeID = employee.EmployeeID, EffectiveDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), Amount = 2950, PreviousSalaryHistoryID = istoric1.SalaryHistoryID };
-            context.SalaryHistories.Add(istoric2);
-            context.SaveChanges();
-            istoric1.NextSalaryHistoryID = istoric2.SalaryHistoryID;
-            context.SalaryHistories.Update(istoric1);
-            context.SaveChanges();
+            
 
         }
 

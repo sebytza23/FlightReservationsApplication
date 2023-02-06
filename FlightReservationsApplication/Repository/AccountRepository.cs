@@ -9,7 +9,8 @@ namespace FlightReservationsApplication.Repository
     public class AccountRepository : Repository<Account>, IAccountRepository
     {
         public AccountRepository(ApplicationDbContext context) : base(context)
-        {}
+        {
+        }
 
         public async Task<bool> EmailExistsAsync(string email)
         {

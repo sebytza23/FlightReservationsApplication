@@ -20,13 +20,13 @@ namespace FlightReservationsApplication.Models
         [Display(Name = "Loc")]
         public int SeatID { get; set; }
         [Display(Name = "Confirmare Rezervare")]
-        public int ReservationConfirmationID { get; set; }
+        public int? ReservationConfirmationID { get; set; }
         [Display(Name = "Status")]
         public Status Status { get; set; }
         [ForeignKey("CustomerID")]
-        public virtual Customer Customer { get; set; }
+        public virtual Customer? Customer { get; set; }
         [ForeignKey("SeatID")]
-        public virtual Seat Seat { get; set; }
+        public virtual Seat? Seat { get; set; }
         [ForeignKey("ReservationConfirmationID")]
         public virtual ReservationConfirmation? ReservationConfirmation { get; set; }
 

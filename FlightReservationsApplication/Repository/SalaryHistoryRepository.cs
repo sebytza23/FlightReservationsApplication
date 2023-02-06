@@ -1,4 +1,4 @@
-﻿/*using FlightReservationsApplication.Context;
+﻿using FlightReservationsApplication.Context;
 using FlightReservationsApplication.Interfaces;
 using FlightReservationsApplication.Models;
 using FlightReservationsApplication.Repository;
@@ -8,72 +8,81 @@ using System.Security.Principal;
 
 namespace FlightReservationsApplication.Repository
 {
-    public class ContactInformationRepository : Repository<ContactInformation>, IContactInformationRepository
+    public class SalaryHistoryRepository : Repository<SalaryHistory>, ISalaryHistoryRepository
     {
-        public ContactInformationRepository(ApplicationDbContext context) : base(context)
+        public SalaryHistoryRepository(ApplicationDbContext context) : base(context)
         {
         }
 
-        public async Task<ContactInformation> CreateContactInformation(ContactInformation contactInformation)
+        public async Task<SalaryHistory> CreateSalaryHistory(SalaryHistory salaryHistory)
         {
-            await _context.ContactInformations.AddAsync(contactInformation);
+            SalaryHistory lastSalaryHistory = (await _context.SalaryHistories.Where(s => s.EmployeeID == salaryHistory.EmployeeID).ToListAsync()).LastOrDefault();
+            await _context.SalaryHistories.AddAsync(salaryHistory);
             await _context.SaveChangesAsync();
-            Account account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountID == contactInformation.AccountID);
-
-            if (contactInformation.IsPrimary || account.ContactInformationID == null)
+            if (lastSalaryHistory != null)
             {
-                account.ContactInformationID = contactInformation.ContactInformationID;
-            }
-            _context.Accounts.Update(account);
-            await _context.SaveChangesAsync();
-            return contactInformation;
-        }
-
-        public async Task EditContactInformation(ContactInformation contactInformation)
-        {
-            await UpdateAsync(contactInformation);
-            Account account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountID == contactInformation.AccountID);
-            if (contactInformation.IsPrimary || account.ContactInformationID == null)
-            {
-                account.ContactInformationID = contactInformation.ContactInformationID;
-            }
-            _context.Accounts.Update(account);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteContactInformation(ContactInformation contactInformation) {
-
-            if (contactInformation == null) return;
-            contactInformation.Account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountID == contactInformation.AccountID);
-            if (contactInformation.Account.ContactInformationID == contactInformation.ContactInformationID)
-            {
-                Account account = contactInformation.Account;
-                account.ContactInformationID = null;
-                _context.Accounts.Update(account);
+                lastSalaryHistory.NextSalaryHistoryID = salaryHistory.SalaryHistoryID;
+                _context.SalaryHistories.Update(lastSalaryHistory);
+                await _context.SaveChangesAsync();
+                salaryHistory.PreviousSalaryHistoryID = lastSalaryHistory.SalaryHistoryID;
+                _context.SalaryHistories.Update(lastSalaryHistory);
                 await _context.SaveChangesAsync();
             }
-            await DeleteAsync(contactInformation);
-            
+            return salaryHistory;
         }
 
-        public async Task<List<ContactInformation>> InformationsWithAccounts()
+        public async Task EditSalaryHistory(SalaryHistory salaryHistory)
         {
-            string[] includes = { "Account" };
-            List<ContactInformation> contactInformation = await (await Include(includes)).ToListAsync();
-            return contactInformation;
+            await UpdateAsync(salaryHistory);
         }
 
-        public async Task<ContactInformation> GetContactInformationById(int? id)
+        public async Task DeleteSalaryHistory(SalaryHistory salaryHistory)
         {
-            string[] includes = { "Account" };
-            return await (await Include(includes)).FirstOrDefaultAsync(c => c.ContactInformationID == id);
+            if (salaryHistory == null) return;
+            if (salaryHistory.PreviousSalaryHistoryID != null)
+            {
+                salaryHistory.PreviousSalaryHistory.NextSalaryHistoryID = salaryHistory.NextSalaryHistoryID;
+                if(salaryHistory.NextSalaryHistoryID != null)
+                {
+                    salaryHistory.NextSalaryHistory.PreviousSalaryHistoryID = salaryHistory.PreviousSalaryHistory.SalaryHistoryID;
+                    _context.SalaryHistories.Update(salaryHistory);
+                    await _context.SaveChangesAsync();
+                }
+            }else if(salaryHistory.NextSalaryHistoryID != null)
+            {
+                salaryHistory.NextSalaryHistory.PreviousSalaryHistoryID = null;
+                _context.SalaryHistories.Update(salaryHistory);
+                await _context.SaveChangesAsync();
+            }
+            await DeleteAsync(salaryHistory);
+
         }
 
-        public async Task<DbSet<Account>> GetAccounts()
+        public async Task<List<SalaryHistory>> SalaryWithEmployee()
         {
-            return _context.Accounts;
+            string[] includes = { "Employee" };
+            List<SalaryHistory> salaryHistory = await (await Include(includes)).ToListAsync();
+            return salaryHistory;
         }
+
+        public async Task<SalaryHistory> GetSalaryWithAll(int? id)
+        {
+            string[] includes = { "Employee","NextSalaryHistory","PreviousSalaryHistory" };
+            return await (await Include(includes)).FirstOrDefaultAsync(c => c.SalaryHistoryID == id);
+        }
+
+        public async Task<SalaryHistory> GetSalaryHistoryById(int? id)
+        {
+            string[] includes = { "Employee" };
+            return await (await Include(includes)).FirstOrDefaultAsync(c => c.SalaryHistoryID == id);
+        }
+
+        public async Task<List<Employee>> GetEmployees()
+        {
+            return await _context.Employees.ToListAsync();
+        }
+
+        
 
     }
 }
-*/

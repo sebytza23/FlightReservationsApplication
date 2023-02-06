@@ -30,6 +30,6 @@ namespace FlightReservationsApplication.Models
         [Display(Name = "Card Principal")]
         public bool IsPrimary { get; set; }
         [ForeignKey("CustomerID")]
-        public virtual Customer Customer { get; set; }
+        public virtual Customer? Customer { get; set; }
     }
 }

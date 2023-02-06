@@ -13,7 +13,7 @@ namespace FlightReservationsApplication.Models
         [Display(Name = "Administrator")]
         public bool IsAdmin { get; set; }
         [ForeignKey("AccountID")]
-        public virtual Account Account { get; set; }
+        public virtual Account? Account { get; set; }
         public virtual ICollection<ReservationConfirmation>? ReservationConfirmations { get; set; }
         public virtual ICollection<SalaryHistory>? SalaryHistories { get; set; }
     }

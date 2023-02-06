@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="EmployeeID" class="control-label"></label>
-                <select asp-for="EmployeeID" class ="form-control" asp-items="ViewBag.EmployeeID"></select>
+                <select asp-for="EmployeeID" class="form-control" asp-items="ViewBag.EmployeeID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PreviousSalaryHistoryID" class="control-label"></label>
@@ -23,7 +23,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="NextSalaryHistoryID" class="control-label"></label>
-                <select asp-for="NextSalaryHistoryID" class ="form-control" asp-items="ViewBag.NextSalaryHistoryID"></select>
+                <input asp-for="NextSalaryHistoryID" class="form-control" />
+                <span asp-validation-for="NextSalaryHistoryID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EffectiveDate" class="control-label"></label>

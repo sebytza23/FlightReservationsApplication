@@ -13,7 +13,7 @@ namespace FlightReservationsApplication.Models
         [Display(Name = "Card")]
         public int? CreditCardID { get; set; }
         [ForeignKey("AccountID")]
-        public virtual Account Account { get; set; }
+        public virtual Account? Account { get; set; }
         [ForeignKey("CreditCardID")]
         public virtual ICollection<CreditCard>? CreditCards { get; set; }
         public virtual ICollection<Reservation>? Reservations { get; set; }

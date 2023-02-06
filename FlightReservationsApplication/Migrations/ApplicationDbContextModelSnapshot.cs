@@ -330,7 +330,7 @@ namespace FlightReservationsApplication.Migrations
                     b.Property<int?>("FlightID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReservationConfirmationID")
+                    b.Property<int?>("ReservationConfirmationID")
                         .HasColumnType("int");
 
                     b.Property<int>("SeatID")
@@ -346,7 +346,8 @@ namespace FlightReservationsApplication.Migrations
                     b.HasIndex("FlightID");
 
                     b.HasIndex("ReservationConfirmationID")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ReservationConfirmationID] IS NOT NULL");
 
                     b.HasIndex("SeatID");
 
@@ -560,8 +561,7 @@ namespace FlightReservationsApplication.Migrations
                     b.HasOne("FlightReservationsApplication.Models.ReservationConfirmation", "ReservationConfirmation")
                         .WithOne("Reservation")
                         .HasForeignKey("FlightReservationsApplication.Models.Reservation", "ReservationConfirmationID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("FlightReservationsApplication.Models.Seat", "Seat")
                         .WithMany("Reservations")
@@ -681,8 +681,7 @@ namespace FlightReservationsApplication.Migrations
 
             modelBuilder.Entity("FlightReservationsApplication.Models.ReservationConfirmation", b =>
                 {
-                    b.Navigation("Reservation")
-                        .IsRequired();
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("FlightReservationsApplication.Models.SalaryHistory", b =>

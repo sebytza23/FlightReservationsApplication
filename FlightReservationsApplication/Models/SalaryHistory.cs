@@ -19,7 +19,7 @@ namespace FlightReservationsApplication.Models
         [Display(Name = "Salariu")]
         public decimal Amount { get; set; }
         [ForeignKey("EmployeeID")]
-        public virtual Employee Employee { get; set; }
+        public virtual Employee? Employee { get; set; }
         [ForeignKey("PreviousSalaryHistoryID")]
         public virtual SalaryHistory? PreviousSalaryHistory { get; set; }
         [ForeignKey("NextSalaryHistoryID")]

@@ -7,37 +7,35 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlightReservationsApplication.Context;
 using FlightReservationsApplication.Models;
+using FlightReservationsApplication.Interfaces;
+using FlightReservationsApplication.Repository;
 
 namespace FlightReservationsApplication.Controllers
 {
     public class ReservationsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IReservationRepository _reservationRepository;
 
-        public ReservationsController(ApplicationDbContext context)
+        public ReservationsController(IReservationRepository reservationRepository)
         {
-            _context = context;
+            _reservationRepository = reservationRepository;
         }
 
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Reservations.Include(r => r.Customer).Include(r => r.Seat);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _reservationRepository.ReservationWithAll());
         }
 
         // GET: Reservations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Reservations == null)
+            if (await _reservationRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations
-                .Include(r => r.Customer)
-                .Include(r => r.Seat)
-                .FirstOrDefaultAsync(m => m.ReservationID == id);
+            var reservation = await _reservationRepository.GetReservationById(id);
             if (reservation == null)
             {
                 return NotFound();
@@ -47,10 +45,13 @@ namespace FlightReservationsApplication.Controllers
         }
 
         // GET: Reservations/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID");
-            ViewData["SeatID"] = new SelectList(_context.Seats, "SeatID", "SeatID");
+            ViewData["CustomerID"] = new SelectList((await _reservationRepository.GetCustomers()), "CustomerID", "CustomerID");
+            ViewData["SeatID"] = new SelectList((await _reservationRepository.GetSeats()), "SeatID", "SeatID");
+            ViewData["ReservationConfirmationID"] = new SelectList((await _reservationRepository.GetReservationConfirmations()), "ReservationConfirmationID", "ReservationConfirmationID");
+            ViewData["StatusID"] = new SelectList(_reservationRepository.GetStatuses(), "ID", "Status");
+
             return View();
         }
 
@@ -63,30 +64,33 @@ namespace FlightReservationsApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reservation);
-                await _context.SaveChangesAsync();
+                await _reservationRepository.CreateReservation(reservation);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", reservation.CustomerID);
-            ViewData["SeatID"] = new SelectList(_context.Seats, "SeatID", "SeatID", reservation.SeatID);
+            ViewData["CustomerID"] = new SelectList((await _reservationRepository.GetCustomers()), "CustomerID", "CustomerID", reservation.CustomerID);
+            ViewData["SeatID"] = new SelectList((await _reservationRepository.GetSeats()), "SeatID", "SeatID", reservation.SeatID);
+            ViewData["ReservationConfirmationID"] = new SelectList((await _reservationRepository.GetReservationConfirmations()), "ReservationConfirmationID", "ReservationConfirmationID", reservation.ReservationConfirmationID);
+            ViewData["StatusID"] = new SelectList(_reservationRepository.GetStatuses(), "ID", "Status", reservation.Status);
             return View(reservation);
         }
 
         // GET: Reservations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Reservations == null)
+            if (await _reservationRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations.FindAsync(id);
+            var reservation = await _reservationRepository.Details(id);
             if (reservation == null)
             {
                 return NotFound();
             }
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", reservation.CustomerID);
-            ViewData["SeatID"] = new SelectList(_context.Seats, "SeatID", "SeatID", reservation.SeatID);
+            ViewData["CustomerID"] = new SelectList((await _reservationRepository.GetCustomers()), "CustomerID", "CustomerID", reservation.CustomerID);
+            ViewData["SeatID"] = new SelectList((await _reservationRepository.GetSeats()), "SeatID", "SeatID", reservation.SeatID);
+            ViewData["ReservationConfirmationID"] = new SelectList((await _reservationRepository.GetReservationConfirmations()), "ReservationConfirmationID", "ReservationConfirmationID", reservation.ReservationConfirmationID);
+            ViewData["StatusID"] = new SelectList(_reservationRepository.GetStatuses(), "ID", "Status", reservation.Status);
             return View(reservation);
         }
 
@@ -106,12 +110,11 @@ namespace FlightReservationsApplication.Controllers
             {
                 try
                 {
-                    _context.Update(reservation);
-                    await _context.SaveChangesAsync();
+                    await _reservationRepository.EditReservation(reservation);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReservationExists(reservation.ReservationID))
+                    if (!(await _reservationRepository.ExistEntity(reservation.ReservationID)))
                     {
                         return NotFound();
                     }
@@ -122,23 +125,22 @@ namespace FlightReservationsApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID", reservation.CustomerID);
-            ViewData["SeatID"] = new SelectList(_context.Seats, "SeatID", "SeatID", reservation.SeatID);
+            ViewData["CustomerID"] = new SelectList((await _reservationRepository.GetCustomers()), "CustomerID", "CustomerID", reservation.CustomerID);
+            ViewData["SeatID"] = new SelectList((await _reservationRepository.GetSeats()), "SeatID", "SeatID", reservation.SeatID);
+            ViewData["ReservationConfirmationID"] = new SelectList((await _reservationRepository.GetReservationConfirmations()), "ReservationConfirmationID", "ReservationConfirmationID", reservation.ReservationConfirmationID);
+            ViewData["StatusID"] = new SelectList(_reservationRepository.GetStatuses(), "ID", "Status", reservation.Status);
             return View(reservation);
         }
 
         // GET: Reservations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Reservations == null)
+            if (await _reservationRepository.Exist(id))
             {
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations
-                .Include(r => r.Customer)
-                .Include(r => r.Seat)
-                .FirstOrDefaultAsync(m => m.ReservationID == id);
+            var reservation = await _reservationRepository.GetReservationById(id);
             if (reservation == null)
             {
                 return NotFound();
@@ -152,23 +154,14 @@ namespace FlightReservationsApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Reservations == null)
+            if (await _reservationRepository.GetByIdAsync(id) == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Reservations'  is null.");
             }
-            var reservation = await _context.Reservations.FindAsync(id);
-            if (reservation != null)
-            {
-                _context.Reservations.Remove(reservation);
-            }
+            var reservation = await _reservationRepository.GetReservationById(id);
             
-            await _context.SaveChangesAsync();
+            await _reservationRepository.DeleteReservation(reservation);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ReservationExists(int id)
-        {
-          return _context.Reservations.Any(e => e.ReservationID == id);
         }
     }
 }
