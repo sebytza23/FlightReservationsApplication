@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using FlightReservationsApplication.Attributes;
+using Microsoft.AspNetCore.Http;
+
 
 namespace FlightReservationsApplication.Controllers
 {
-    public class ProcedureAttribute : ActionFilterAttribute
+
+    public class ConnectedAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -29,16 +33,20 @@ namespace FlightReservationsApplication.Controllers
         private readonly IAirportRepository _airportRepository;
         private readonly IFlightRepository _flightRepository;
 
-
         public HomeController(ILogger<HomeController> logger, IAirportRepository airportRepository, IFlightRepository flightRepository)
         {
             _logger = logger;
             _airportRepository = airportRepository;
             _flightRepository = flightRepository;
+
         }
-        [Procedure]
+        [Connected]
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
             var homeModelIndex = new HomeIndexModel
             {
                 ToLocation = "",

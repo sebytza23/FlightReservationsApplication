@@ -40,21 +40,17 @@ namespace FlightReservationsApplication.Attributes
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, dbAccount.Email),
+                new Claim(ClaimTypes.Name, dbAccount.FirstName),
+                new Claim(ClaimTypes.Surname, dbAccount.LastName),
+                new Claim(ClaimTypes.Email, dbAccount.Email),
                 new Claim(ClaimTypes.Role, dbAccount.IsEmployee ? (dbAccount.Employee.IsAdmin ? "Admin" : "Employee") : "Customer")
             };
 
             var claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                claims, "ApplicationLoginCookie");
 
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                new AuthenticationProperties
-                {
-                    ExpiresUtc = DateTime.UtcNow.AddMinutes(600),
-                    IsPersistent = true,
-                });
+            HttpContext.User = new ClaimsPrincipal(claimsIdentity);
+            string email = ((ClaimsIdentity)HttpContext.User.Identity).FindFirst(ClaimTypes.Email).Value;
 
             return Ok();
         }

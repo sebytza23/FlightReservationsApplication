@@ -1,3 +1,4 @@
+using FlightReservationsApplication.Attributes;
 using FlightReservationsApplication.Context;
 using FlightReservationsApplication.Interfaces;
 using FlightReservationsApplication.Repository;
@@ -12,7 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+options.UseSqlServer(connectionString));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IAircraftRepository, AircraftRepository>();
@@ -30,11 +33,7 @@ builder.Services.AddTransient<IReservationRepository, ReservationRepository>();
 builder.Services.AddTransient<IReservationConfirmationRepository, ReservationConfirmationRepository>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
-        options => builder.Configuration.Bind("JwtSettings", options))
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-        options => builder.Configuration.Bind("CookieSettings", options));
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -51,13 +50,13 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.UseSession();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapRazorPages();
 });
-
 
 app.Run();

@@ -21,12 +21,8 @@
                             <img class="h-10 w-auto" src="/lib/pictures/IconMain.png" alt="">
                         </div>
                         <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                            <a asp-controller="Accounts" asp-action="Index" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">Accounts</a>
-                            <a asp-controller="CreditCards" asp-action="Index" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">Credit Cards</a>
-                            <a href="#" class="inline-flex items-center border-b-2 border-blue-500 px-1 pt-1 text-sm font-medium text-gray-900">Acasa</a>
-                            <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">Zboruri</a>
-                            <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">Aeroport</a>
-                            <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">Calendar</a>
+                            <a asp-controller="Home" asp-action="Index" class="inline-flex items-center border-b-2 @((ViewData["Title"] == "Acasa") ? "border-blue-500 text-gray-900" : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700") px-1 pt-1 text-sm font-medium">Acasa</a>
+                            <a asp-controller="Home" asp-action="Search" class="inline-flex items-center border-b-2 @((ViewData["Title"] == "Zboruri") ? "border-blue-500 text-gray-900" : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700") px-1 pt-1 text-sm font-medium ">Zboruri</a>
                         </div>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">
