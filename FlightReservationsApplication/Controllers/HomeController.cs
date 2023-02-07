@@ -19,7 +19,7 @@ namespace FlightReservationsApplication.Controllers
         {
             if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
-                filterContext.Result = new RedirectResult("/Accounts");
+                filterContext.Result = new RedirectResult("/Accounts/Login");
                 return;
             }
             base.OnActionExecuting(filterContext);
@@ -40,7 +40,6 @@ namespace FlightReservationsApplication.Controllers
             _flightRepository = flightRepository;
 
         }
-        [Connected]
         public async Task<IActionResult> Index()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
