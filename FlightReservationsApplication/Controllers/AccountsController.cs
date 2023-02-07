@@ -47,7 +47,7 @@ namespace FlightReservationsApplication.Controllers
             {
                 ViewData["Error"] = "Parola introdusa este gresita.";
             }
-            return View();
+            return View(account);
         }
 
         // GET: Accounts/Create

@@ -50,7 +50,6 @@ namespace FlightReservationsApplication.Attributes
                 claims, "ApplicationLoginCookie");
 
             HttpContext.User = new ClaimsPrincipal(claimsIdentity);
-            string email = ((ClaimsIdentity)HttpContext.User.Identity).FindFirst(ClaimTypes.Email).Value;
 
             return Ok();
         }

@@ -48,10 +48,7 @@ namespace FlightReservationsApplication.Controllers
         // GET: Flights/Create
         public async Task<IActionResult> CreateAsync()
         {
-            ViewData["AircraftID"] = new SelectList((await _flightRepository.GetAircrafts()), "AircraftID", "Model");
-            ViewData["AirlineID"] = new SelectList((await _flightRepository.GetAirlines()), "AirlineID", "Name");
-            ViewData["ArrivalAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name");
-            ViewData["DepartureAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name");
+            await GenerateViewData(false, null);
             return View();
         }
 
@@ -67,10 +64,7 @@ namespace FlightReservationsApplication.Controllers
                 flight = await _flightRepository.CreateFlight(flight);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AircraftID"] = new SelectList((await _flightRepository.GetAircrafts()), "AircraftID", "Model", flight.AircraftID);
-            ViewData["AirlineID"] = new SelectList((await _flightRepository.GetAirlines()), "AirlineID", "Name", flight.AirlineID);
-            ViewData["ArrivalAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name", flight.ArrivalAirportID);
-            ViewData["DepartureAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name", flight.DepartureAirportID);
+            await GenerateViewData(true, flight);
             return View(flight);
         }
 
@@ -87,10 +81,7 @@ namespace FlightReservationsApplication.Controllers
             {
                 return NotFound();
             }
-            ViewData["AircraftID"] = new SelectList((await _flightRepository.GetAircrafts()), "AircraftID", "Model", flight.AircraftID);
-            ViewData["AirlineID"] = new SelectList((await _flightRepository.GetAirlines()), "AirlineID", "Name", flight.AirlineID);
-            ViewData["ArrivalAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name", flight.ArrivalAirportID);
-            ViewData["DepartureAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name", flight.DepartureAirportID);
+            await GenerateViewData(true, flight);
             return View(flight);
         }
 
@@ -125,10 +116,7 @@ namespace FlightReservationsApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AircraftID"] = new SelectList((await _flightRepository.GetAircrafts()), "AircraftID", "Model", flight.AircraftID);
-            ViewData["AirlineID"] = new SelectList((await _flightRepository.GetAirlines()), "AirlineID", "Name", flight.AirlineID);
-            ViewData["ArrivalAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name", flight.ArrivalAirportID);
-            ViewData["DepartureAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name", flight.DepartureAirportID);
+            await GenerateViewData(true, flight);
             return View(flight);
         }
 
@@ -161,6 +149,13 @@ namespace FlightReservationsApplication.Controllers
             var flight = await _flightRepository.Details(id);
             await _flightRepository.DeleteFlight(flight);
             return RedirectToAction(nameof(Index));
+        }
+        public async Task GenerateViewData(bool hasSelected, Flight? flight)
+        {
+            ViewData["AircraftID"] = new SelectList((await _flightRepository.GetAircrafts()), "AircraftID", "Model", (hasSelected) ? flight.AircraftID : "");
+            ViewData["AirlineID"] = new SelectList((await _flightRepository.GetAirlines()), "AirlineID", "Name", (hasSelected) ? flight.AirlineID : "");
+            ViewData["ArrivalAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name", (hasSelected) ? flight.ArrivalAirportID : "");
+            ViewData["DepartureAirportID"] = new SelectList((await _flightRepository.GetAirports()), "AirportID", "Name", (hasSelected) ? flight.DepartureAirportID : "");
         }
     }
 }
