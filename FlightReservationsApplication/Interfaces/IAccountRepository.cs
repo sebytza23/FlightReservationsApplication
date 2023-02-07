@@ -9,5 +9,6 @@ namespace FlightReservationsApplication.Interfaces
         Task<bool> EmailExistsAsync(string email);
         Task<Account> CreateAccount(Account account);
         Task<IQueryable<ContactInformation>> GetContactInformation(Guid id);
+        Task<Employee> GetEmployeeByIdAsync(int id);
     }
 }

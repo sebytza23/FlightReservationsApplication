@@ -10,6 +10,8 @@ using FlightReservationsApplication.Models;
 using FlightReservationsApplication.Interfaces;
 using FlightReservationsApplication.Repository;
 using System.Configuration;
+using System.Security.Principal;
+using FlightReservationsApplication.Attributes;
 
 namespace FlightReservationsApplication.Controllers
 {
@@ -21,24 +23,31 @@ namespace FlightReservationsApplication.Controllers
         {
             _accountRepository = accountRepository;
         }
-        public async Task<IActionResult> Login(string email, string password)
+
+        public IActionResult Login()
         {
-            if (await _accountRepository.EmailExistsAsync(email))
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("Email,Password")] Account account)
+        {
+            LoginController login = new LoginController(_accountRepository);
+            var result = await login.Login(account);
+            if (result is OkResult)
             {
-                Account account = await _accountRepository.GetByEmailAsync(email);
-                if (account.Password == password)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    return View();
-                }
+                return RedirectToAction("Home", "Index");
             }
-            else
+            else if (result is NotFoundResult)
             {
-                return View();
+                ViewData["Error"] = "Acest cont nu exista.";
             }
+            else if (result is UnauthorizedResult)
+            {
+                ViewData["Error"] = "Parola introdusa este gresita.";
+            }
+            return View();
         }
 
         // GET: Accounts/Create
@@ -55,7 +64,9 @@ namespace FlightReservationsApplication.Controllers
         public async Task<IActionResult> Create([Bind("Email,Password,FirstName,LastName,IsEmployee")] Account account)
         {
             if (ModelState.IsValid)
-            {                
+            {
+
+
                 account = await _accountRepository.CreateAccount(account);
                 return RedirectToAction(nameof(Index));
             }

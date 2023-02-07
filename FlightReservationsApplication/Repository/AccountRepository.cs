@@ -57,5 +57,10 @@ namespace FlightReservationsApplication.Repository
             return result.AsQueryable();
         }
 
+        public async Task<Employee> GetEmployeeByIdAsync(int id)
+        {
+            return await _context.Employees.FirstOrDefaultAsync(e => e.EmployeeID == id);
+        }
+
     }
 }

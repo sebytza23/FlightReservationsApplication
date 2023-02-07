@@ -143,10 +143,7 @@ namespace FlightReservationsApplication.Controllers
                 return Problem("Entitatea 'ApplicationDbContext.Aircraft'  are valoarea null.");
             }
             var aircraft = await _aircraftRepository.Details(id);
-            if (aircraft != null)
-            {
-                await _aircraftRepository.DeleteAsync(aircraft);
-            }
+            await _aircraftRepository.DeleteAircraft(aircraft);
 
             return RedirectToAction(nameof(Index));
         }

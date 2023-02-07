@@ -24,7 +24,7 @@ namespace FlightReservationsApplication.Controllers
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-            return View(await _reservationRepository.ReservationWithAll());
+            return View(await _reservationRepository.ReservationWithData());
         }
 
         // GET: Reservations/Details/5
@@ -51,6 +51,7 @@ namespace FlightReservationsApplication.Controllers
             ViewData["SeatID"] = new SelectList((await _reservationRepository.GetSeats()), "SeatID", "SeatID");
             ViewData["ReservationConfirmationID"] = new SelectList((await _reservationRepository.GetReservationConfirmations()), "ReservationConfirmationID", "ReservationConfirmationID");
             ViewData["StatusID"] = new SelectList(_reservationRepository.GetStatuses(), "ID", "Status");
+            ViewData["FlightID"] = new SelectList((await _reservationRepository.GetFlights()), "FlightID", "FlightID");
 
             return View();
         }
@@ -60,7 +61,7 @@ namespace FlightReservationsApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservationID,CustomerID,ReservationConfirmationID,SeatID,Status")] Reservation reservation)
+        public async Task<IActionResult> Create([Bind("ReservationID,CustomerID,ReservationConfirmationID,SeatID,Status, FlightID")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +100,7 @@ namespace FlightReservationsApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReservationID,CustomerID,ReservationConfirmationID,SeatID,Status")] Reservation reservation)
+        public async Task<IActionResult> Edit(int id, [Bind("ReservationID,CustomerID,ReservationConfirmationID,SeatID,Status, FlightID")] Reservation reservation)
         {
             if (id != reservation.ReservationID)
             {
@@ -140,7 +141,7 @@ namespace FlightReservationsApplication.Controllers
                 return NotFound();
             }
 
-            var reservation = await _reservationRepository.GetReservationById(id);
+            var reservation = await _reservationRepository.GetReservationWithDataById(id);
             if (reservation == null)
             {
                 return NotFound();
@@ -158,7 +159,7 @@ namespace FlightReservationsApplication.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Reservations'  is null.");
             }
-            var reservation = await _reservationRepository.GetReservationById(id);
+            var reservation = await _reservationRepository.GetReservationWithDataById(id);
             
             await _reservationRepository.DeleteReservation(reservation);
             return RedirectToAction(nameof(Index));

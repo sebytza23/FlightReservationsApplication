@@ -15,5 +15,7 @@ namespace FlightReservationsApplication.Interfaces
         Task<DbSet<Aircraft>> GetAircrafts();
         Task<DbSet<Airline>> GetAirlines();
         Task<DbSet<Airport>> GetAirports();
+        Task<List<Seat>> GetSeats();
+        Task<List<Class>> GetClasses();
     }
 }

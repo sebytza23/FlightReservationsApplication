@@ -4,6 +4,7 @@
     {
         public string ToLocation { get; set; }
         public string FromLocation { get; set; }
+        public DateTime DepartureDate { get; set; }
         public List<string> CityLocation { get; set; }
     }
 }

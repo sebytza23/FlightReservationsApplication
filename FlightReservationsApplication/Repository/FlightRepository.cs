@@ -60,60 +60,56 @@ namespace FlightReservationsApplication.Repository
             return viewModel;
         }
 
+        public async Task<List<Flight>> Paginate(IQueryable<Flight> flight, int pageNumber, int pageSize)
+        {
+            return await flight.Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize).ToListAsync();
+        }
+
         public async Task<FlightIndexModel> GetFlightsByLocationAsync(string? DepartureLocation, string? ArrivalLocation, DateTime? DepartureTime, int pageNumber, int pageSize)
         {
-            string[] includes = { "Aircraft", "Airline", "DepartureAirport", "ArrivalAirport", "Seats", "Seats.Class" };
-            List<Flight> flights;
+            string[] includes = { "Aircraft", "Airline", "DepartureAirport", "ArrivalAirport", "Seats" };
+            IQueryable<Flight> flights;
             if (DepartureLocation != null && ArrivalLocation != null && DepartureTime != null)
-                flights = await (await Include(includes))
-                    .Where(c => c.DepartureAirport.Location == DepartureLocation && c.ArrivalAirport.Location == ArrivalLocation && c.DepartureTime >= DepartureTime)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync();
+                flights = (await Include(includes))
+                    .Where(c => c.DepartureAirport.Location == DepartureLocation && c.ArrivalAirport.Location == ArrivalLocation && c.DepartureTime >= DepartureTime && (c.Seats.Count > 0 && c.Seats.Where(s => s.IsAvailable == true).Count() > 0));
             else if (DepartureLocation != null && ArrivalLocation != null)
-                flights = await (await Include(includes))
-                    .Where(c => c.DepartureAirport.Location == DepartureLocation && c.ArrivalAirport.Location == ArrivalLocation)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync();
+                flights = (await Include(includes))
+                    .Where(c => c.DepartureAirport.Location == DepartureLocation && c.ArrivalAirport.Location == ArrivalLocation && (c.Seats.Count > 0 && c.Seats.Where(s => s.IsAvailable == true).Count() > 0));
             else if (DepartureLocation != null && DepartureTime != null)
-                flights = await (await Include(includes))
-                    .Where(c => c.DepartureAirport.Location == DepartureLocation && c.DepartureTime >= DepartureTime)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync();
+                flights = (await Include(includes))
+                    .Where(c => c.DepartureAirport.Location == DepartureLocation && c.DepartureTime >= DepartureTime && (c.Seats.Count > 0 && c.Seats.Where(s => s.IsAvailable == true).Count() > 0));
             else if (ArrivalLocation != null && DepartureTime != null)
-                flights = await (await Include(includes))
-                    .Where(c => c.ArrivalAirport.Location == ArrivalLocation && c.DepartureTime >= DepartureTime)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync();
+                flights = (await Include(includes))
+                    .Where(c => c.ArrivalAirport.Location == ArrivalLocation && c.DepartureTime >= DepartureTime && (c.Seats.Count > 0 && c.Seats.Where(s => s.IsAvailable == true).Count() > 0));
             else if (DepartureLocation != null)
-                flights = await (await Include(includes))
-                    .Where(c => c.DepartureAirport.Location == DepartureLocation)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync();
+                flights = (await Include(includes))
+                    .Where(c => c.DepartureAirport.Location == DepartureLocation && (c.Seats.Count > 0 && c.Seats.Where(s => s.IsAvailable == true).Count() > 0));
             else if (ArrivalLocation != null)
-                flights = await (await Include(includes))
-                    .Where(c => c.ArrivalAirport.Location == ArrivalLocation)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync();
+                flights = (await Include(includes))
+                    .Where(c => c.ArrivalAirport.Location == ArrivalLocation && (c.Seats.Count > 0 && c.Seats.Where(s => s.IsAvailable == true).Count() > 0));
             else if (DepartureTime != null)
-                flights = await (await Include(includes))
-                    .Where(c => c.DepartureTime >= DepartureTime)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync();
+                flights = (await Include(includes))
+                    .Where(c => c.DepartureTime >= DepartureTime && (c.Seats.Count > 0 && c.Seats.Where(s => s.IsAvailable == true).Count() > 0));
             else
-                flights = await (await Include(includes))
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync();
+                flights = (await Include(includes))
+                    .Where(c => c.DepartureTime >= DateTime.Now && (c.Seats.Count > 0 && c.Seats.Where(s => s.IsAvailable == true).Count() > 0));
             var pagingInfo = new PaginationInfo
             {
-                TotalItems = (await Include(includes)).Count(),
+                TotalItems = flights.Count(),
                 ItemsPerPage = pageSize,
                 CurrentPage = pageNumber
             };
+            if (pagingInfo.TotalPages < pageNumber)
+            {
+                pageNumber = pagingInfo.TotalPages;
+                pagingInfo.CurrentPage = pageNumber;
+            }
 
             var pageNumbers = PaginationHelper.GetPageNumbers(pageNumber, pagingInfo.TotalPages);
             FlightIndexModel viewModel = new FlightIndexModel
             {
-                Flights = flights,
+                Flights = await Paginate(flights, pageNumber, pageSize),
                 PagingInfo = pagingInfo,
                 PageNumbers = pageNumbers
             };
@@ -140,6 +136,12 @@ namespace FlightReservationsApplication.Repository
         {
             return _context.Airports;
         }
-
+        public async Task<List<Seat>> GetSeats(){
+            return await _context.Seats.ToListAsync();
+        }
+        public async Task<List<Class>> GetClasses()
+        {
+            return await _context.Classes.ToListAsync();
+        }
     }
 }

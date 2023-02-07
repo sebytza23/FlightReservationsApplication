@@ -21,6 +21,8 @@ namespace FlightReservationsApplication.Models
         public int SeatID { get; set; }
         [Display(Name = "Confirmare Rezervare")]
         public int? ReservationConfirmationID { get; set; }
+        [Display(Name = "Zbor")]
+        public int FlightID { get; set; }
         [Display(Name = "Status")]
         public Status Status { get; set; }
         [ForeignKey("CustomerID")]

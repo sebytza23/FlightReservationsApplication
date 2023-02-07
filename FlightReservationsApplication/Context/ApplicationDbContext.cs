@@ -92,13 +92,13 @@ namespace FlightReservationsApplication.Context
             modelBuilder.Entity<Reservation>()
                 .HasOne(r => r.ReservationConfirmation)
                 .WithOne(rc => rc.Reservation)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ReservationConfirmation>()
                  .HasOne(rc => rc.Reservation)
                  .WithOne(r => r.ReservationConfirmation)
                  .HasForeignKey<Reservation>(rc => rc.ReservationID)
-                 .OnDelete(DeleteBehavior.NoAction);
+                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SalaryHistory>()
                 .HasOne(sh => sh.PreviousSalaryHistory)

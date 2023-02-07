@@ -276,3 +276,4 @@ C:\Users\sebby\source\repos\FlightReservationsApplication\FlightReservationsAppl
 C:\Users\sebby\source\repos\FlightReservationsApplication\FlightReservationsApplication\bin\Debug\net6.0\Heroicons.AspNetCore.Mvc.TagHelpers.dll
 C:\Users\sebby\source\repos\FlightReservationsApplication\FlightReservationsApplication\bin\Debug\net6.0\dotnet-aspnet-codegenerator-design.dll
 C:\Users\sebby\source\repos\FlightReservationsApplication\FlightReservationsApplication\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+C:\Users\sebby\source\repos\FlightReservationsApplication\FlightReservationsApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
